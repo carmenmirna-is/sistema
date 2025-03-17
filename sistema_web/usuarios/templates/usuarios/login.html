@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-color: #2E365A;
+            color: #92A1C2;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background-color: #3F5B8D;
+            padding: 30px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .login-container h1 {
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #6B597F;
+            background-color: #2E365A;
+            color: #92A1C2;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #BD6C73;
+        }
+        button {
+            background-color: #BD6C73;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #A2869C;
+        }
+        .fa-user, .fa-lock {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1><i class="fas fa-sign-in-alt"></i> Login</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="correo"><i class="fas fa-user"></i> Correo:</label>
+                <input type="email" id="correo" name="correo" required>
+            </div>
+            <div class="input-group">
+                <label for="contraseña"><i class="fas fa-lock"></i> Contraseña:</label>
+                <input type="password" id="contraseña" name="contraseña" required>
+            </div>
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+    </div>
+</body>
+</html>

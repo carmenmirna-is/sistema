@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-color: #2E365A;
+            color: #92A1C2;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .dashboard-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #3F5B8D;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .dashboard-container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .dashboard-actions {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .dashboard-actions a {
+            background-color: #BD6C73;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            flex: 1;
+            margin: 0 10px;
+        }
+        .dashboard-actions a:hover {
+            background-color: #A2869C;
+        }
+        .fa-home, .fa-sign-out-alt {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1><i class="fas fa-home"></i> Dashboard</h1>
+        <p>Bienvenido, {{ request.session.nombre }}.</p>
+        <div class="dashboard-actions">
+            <a href="{% url 'enviar_solicitud' %}"><i class="fas fa-plus"></i> Enviar Solicitud</a>
+            <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+        </div>
+    </div>
+</body>
+</html>
