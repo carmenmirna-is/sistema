@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Administrador</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1><i class="fas fa-user-shield"></i> Dashboard Administrador</h1>
+        <p>Bienvenido, {{ request.session.nombre }}.</p>
+        <div class="dashboard-actions">
+            <a href="{% url 'registrar_espacio' %}"><i class="fas fa-plus"></i> Registrar Espacio</a>
+            <a href="{% url 'registrar_encargado' %}"><i class="fas fa-user-plus"></i> Registrar Encargado</a>
+            <a href="{% url 'listar_espacios' %}"><i class="fas fa-list"></i> Listar Espacios</a>
+            <a href="{% url 'listar_encargados' %}"><i class="fas fa-list"></i> Listar Encargados</a>
+            <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+        </div>
+    </div>
+</body>
+</html>

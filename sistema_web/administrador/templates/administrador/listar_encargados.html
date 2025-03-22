@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Listar Encargados</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="table-container">
+        <h1><i class="fas fa-users"></i> Lista de Encargados</h1>
+        <a href="{% url 'registrar_encargado' %}" class="btn">Registrar Nuevo Encargado</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for encargado in encargados %}
+                <tr>
+                    <td>{{ encargado.id }}</td>
+                    <td>{{ encargado.nombre }}</td>
+                    <td>{{ encargado.correo }}</td>
+                    <td>
+                        <a href="{% url 'editar_encargado' encargado.id %}" class="btn btn-edit">Editar</a>
+                        <a href="{% url 'eliminar_encargado' encargado.id %}" class="btn btn-delete">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

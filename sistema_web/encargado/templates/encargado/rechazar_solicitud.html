@@ -1,49 +1,23 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <meta charset="UTF-8">
     <title>Rechazar Solicitud</title>
-    <style>
-        body {
-            background-color: #2E365A;
-            color: #92A1C2;
-            font-family: Arial, sans-serif;
-        }
-        form {
-            background-color: #3F5B8D;
-            padding: 20px;
-            border-radius: 10px;
-            width: 300px;
-            margin: 0 auto;
-        }
-        textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #6B597F;
-        }
-        button {
-            background-color: #BD6C73;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #A2869C;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <h1>Rechazar Solicitud</h1>
-    <form method="post">
-        {% csrf_token %}
-        <label for="motivo_rechazo">Motivo de Rechazo:</label>
-        <textarea id="motivo_rechazo" name="motivo_rechazo" required></textarea><br><br>
-        <button type="submit">Rechazar</button>
-    </form>
+    <div class="form-container">
+        <h1>Rechazar Solicitud</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="motivo_rechazo">Motivo de Rechazo:</label>
+                <textarea id="motivo_rechazo" name="motivo_rechazo" required></textarea>
+            </div>
+            <button type="submit" class="btn">Rechazar</button>
+        </form>
+    </div>
 </body>
 </html>

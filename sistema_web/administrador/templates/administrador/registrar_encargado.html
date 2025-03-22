@@ -2,12 +2,12 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Registrar Espacio</title>
+    <title>Registrar Encargado</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="form-container">
-        <h1><i class="fas fa-plus"></i> Registrar Espacio</h1>
+        <h1><i class="fas fa-user-plus"></i> Registrar Encargado</h1>
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
@@ -15,16 +15,12 @@
                 <input type="text" id="nombre" name="nombre" required>
             </div>
             <div class="form-group">
-                <label for="descripcion">Descripción:</label>
-                <textarea id="descripcion" name="descripcion" required></textarea>
+                <label for="correo">Correo:</label>
+                <input type="email" id="correo" name="correo" required>
             </div>
             <div class="form-group">
-                <label for="encargado_id">Encargado:</label>
-                <select id="encargado_id" name="encargado_id" required>
-                    {% for encargado in encargados %}
-                        <option value="{{ encargado.0 }}">{{ encargado.1 }}</option>
-                    {% endfor %}
-                </select>
+                <label for="contraseña">Contraseña:</label>
+                <input type="password" id="contraseña" name="contraseña" required>
             </div>
             <button type="submit" class="btn">Registrar</button>
         </form>

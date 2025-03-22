@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.db import connection
 from reportlab.pdfgen import canvas
-from sistema_web.db import get_db_connection
 from openpyxl import Workbook
 from docx import Document
 
@@ -9,22 +9,18 @@ def generar_reporte_pdf(request):
     if not request.session.get('usuario_id'):
         return redirect('login')
 
-    conn = get_db_connection()
-    cur = conn.cursor()
     try:
-        cur.execute(
-            "SELECT s.nombre_evento, s.fecha, u.nombre AS usuario_nombre, e.nombre AS espacio_nombre "
-            "FROM solicitud s "
-            "JOIN usuario u ON s.usuario_id = u.id "
-            "JOIN espacio e ON s.espacio_id = e.id "
-            "WHERE s.estado = 'aceptada'"
-        )
-        solicitudes = cur.fetchall()
+        with connection.cursor() as cur:
+            cur.execute(
+                "SELECT s.nombre_evento, s.fecha, u.nombre AS usuario_nombre, e.nombre AS espacio_nombre "
+                "FROM solicitud s "
+                "JOIN usuario u ON s.usuario_id = u.id "
+                "JOIN espacio e ON s.espacio_id = e.id "
+                "WHERE s.estado = 'aceptada'"
+            )
+            solicitudes = cur.fetchall()
     except Exception as e:
         return HttpResponse(f"Error: {e}", status=500)
-    finally:
-        cur.close()
-        conn.close()
 
     # Crear el PDF
     response = HttpResponse(content_type='application/pdf')
@@ -49,22 +45,18 @@ def generar_reporte_excel(request):
     if not request.session.get('usuario_id'):
         return redirect('login')
 
-    conn = get_db_connection()
-    cur = conn.cursor()
     try:
-        cur.execute(
-            "SELECT s.nombre_evento, s.fecha, u.nombre AS usuario_nombre, e.nombre AS espacio_nombre "
-            "FROM solicitud s "
-            "JOIN usuario u ON s.usuario_id = u.id "
-            "JOIN espacio e ON s.espacio_id = e.id "
-            "WHERE s.estado = 'aceptada'"
-        )
-        solicitudes = cur.fetchall()
+        with connection.cursor() as cur:
+            cur.execute(
+                "SELECT s.nombre_evento, s.fecha, u.nombre AS usuario_nombre, e.nombre AS espacio_nombre "
+                "FROM solicitud s "
+                "JOIN usuario u ON s.usuario_id = u.id "
+                "JOIN espacio e ON s.espacio_id = e.id "
+                "WHERE s.estado = 'aceptada'"
+            )
+            solicitudes = cur.fetchall()
     except Exception as e:
         return HttpResponse(f"Error: {e}", status=500)
-    finally:
-        cur.close()
-        conn.close()
 
     # Crear el archivo Excel
     wb = Workbook()
@@ -89,22 +81,18 @@ def generar_reporte_word(request):
     if not request.session.get('usuario_id'):
         return redirect('login')
 
-    conn = get_db_connection()
-    cur = conn.cursor()
     try:
-        cur.execute(
-            "SELECT s.nombre_evento, s.fecha, u.nombre AS usuario_nombre, e.nombre AS espacio_nombre "
-            "FROM solicitud s "
-            "JOIN usuario u ON s.usuario_id = u.id "
-            "JOIN espacio e ON s.espacio_id = e.id "
-            "WHERE s.estado = 'aceptada'"
-        )
-        solicitudes = cur.fetchall()
+        with connection.cursor() as cur:
+            cur.execute(
+                "SELECT s.nombre_evento, s.fecha, u.nombre AS usuario_nombre, e.nombre AS espacio_nombre "
+                "FROM solicitud s "
+                "JOIN usuario u ON s.usuario_id = u.id "
+                "JOIN espacio e ON s.espacio_id = e.id "
+                "WHERE s.estado = 'aceptada'"
+            )
+            solicitudes = cur.fetchall()
     except Exception as e:
         return HttpResponse(f"Error: {e}", status=500)
-    finally:
-        cur.close()
-        conn.close()
 
     # Crear el documento Word
     doc = Document()
@@ -123,5 +111,3 @@ def generar_reporte_word(request):
     doc.save(response)
 
     return response
-
-# Create your views here.

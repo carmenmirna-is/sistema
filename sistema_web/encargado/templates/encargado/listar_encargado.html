@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Listar Solicitudes</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="table-container">
+        <h1><i class="fas fa-list"></i> Solicitudes de Mi Espacio</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Solicitante</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for solicitud in solicitudes %}
+                <tr>
+                    <td>{{ solicitud.id }}</td>
+                    <td>{{ solicitud.solicitante }}</td>
+                    <td>{{ solicitud.fecha }}</td>
+                    <td>{{ solicitud.estado }}</td>
+                    <td>
+                        <a href="{% url 'detalle_solicitud' solicitud.id %}" class="btn">Ver Detalle</a>
+                        <a href="{% url 'editar_solicitud' solicitud.id %}" class="btn btn-edit">Editar</a>
+                        <a href="{% url 'eliminar_solicitud' solicitud.id %}" class="btn btn-delete">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

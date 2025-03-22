@@ -19,20 +19,36 @@ from django.urls import path
 from usuarios import views as usuarios_views
 from encargado import views as encargado_views
 from reportes import views as reportes_views
+from administrador import views as administrador_views
+from django.conf.urls import handler404
+
+handler404 = 'sistema_web.views.custom_404'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', usuarios_views.home, name='home'),  # Ruta raíz
     path('registrar/', usuarios_views.registrar_usuario, name='registrar_usuario'),
     path('login/', usuarios_views.login, name='login'),
+    path('dashboard/', usuarios_views.dashboard_usuario, name='dashboard_usuario'),
+    path('dashboard-administrador/', administrador_views.dashboard_administrador, name='dashboard_administrador'),
+    path('dashboard-encargado/', encargado_views.dashboard_encargado, name='dashboard_encargado'),
     path('dashboard/', usuarios_views.dashboard, name='dashboard'),
     path('logout/', usuarios_views.logout, name='logout'),
     path('enviar-solicitud/', usuarios_views.enviar_solicitud, name='enviar_solicitud'),
-    path('solicitudes-pendientes/', encargado_views.solicitudes_pendientes, name='solicitudes_pendientes'),
+    path('solicitudes/', encargado_views.listar_solicitudes, name='listar_solicitudes'),
+    path('solicitudes_pendientes/', encargado_views.solicitudes_pendientes, name='solicitudes_pendientes'),
     path('aprobar-solicitud/<int:solicitud_id>/', encargado_views.aprobar_solicitud, name='aprobar_solicitud'),
     path('rechazar-solicitud/<int:solicitud_id>/', encargado_views.rechazar_solicitud, name='rechazar_solicitud'),
     path('solicitudes-aceptadas/', encargado_views.solicitudes_aceptadas, name='solicitudes_aceptadas'),
     path('reporte-pdf/', reportes_views.generar_reporte_pdf, name='reporte_pdf'),
     path('reporte-excel/', reportes_views.generar_reporte_excel, name='reporte_excel'),
     path('reporte-word/', reportes_views.generar_reporte_word, name='reporte_word'),
+    path('registrar-espacio/', administrador_views.registrar_espacio, name='registrar_espacio'),
+    path('registrar-encargado/', administrador_views.registrar_encargado, name='registrar_encargado'),
+    path('listar-espacios/', administrador_views.listar_espacios, name='listar_espacios'),
+    path('editar-espacio/<int:espacio_id>/', administrador_views.editar_espacio, name='editar_espacio'),
+    path('eliminar-espacio/<int:espacio_id>/', administrador_views.eliminar_espacio, name='eliminar_espacio'),
+    path('listar-encargados/', administrador_views.listar_encargados, name='listar_encargados'),
+    path('editar-encargado/<int:encargado_id>/', administrador_views.editar_encargado, name='editar_encargado'),
+    path('eliminar-encargado/<int:encargado_id>/', administrador_views.eliminar_encargado, name='eliminar_encargado'),
 ]
