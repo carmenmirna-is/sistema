@@ -4,13 +4,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard Usuario</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="dashboard-container">
         <h1><i class="fas fa-user"></i> Dashboard Usuario</h1>
-        <p>Bienvenido, {{ request.session.nombre }}.</p>
+        <p>Bienvenido, {{ usuario.nombre }}.</p>
+        <div class="calendario">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Dom</th>
+                        <th>Lun</th>
+                        <th>Mar</th>
+                        <th>Mié</th>
+                        <th>Jue</th>
+                        <th>Vie</th>
+                        <th>Sáb</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for semana in semanas %}
+                    <tr>
+                        {% for dia in semana %}
+                        <td>
+                            {% if dia != 0 %}
+                                {{ dia }}
+                                {% for evento in eventos %}
+                                    {% with fecha_evento=evento.fecha fecha_calendario=year_actual|stringformat:"04d"|add:"-"|add:mes_actual|stringformat:"02d"|add:"-"|add:dia|stringformat:"02d" %}
+                                        <!-- Depuración -->
+                                        <!-- Fecha evento: {{ fecha_evento }} -->
+                                        <!-- Fecha calendario: {{ fecha_calendario }} -->
+                                        {% if fecha_evento == fecha_calendario %}
+                                            <div class="evento evento-{{ evento.color }}">{{ evento.nombre }}</div>
+                                        {% endif %}
+                                    {% endwith %}
+                                {% endfor %}
+                            {% endif %}
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         <div class="dashboard-actions">
             <a href="{% url 'enviar_solicitud' %}"><i class="fas fa-plus"></i> Enviar Solicitud</a>
             <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>

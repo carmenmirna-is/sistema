@@ -1,15 +1,71 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.db import connection
+from datetime import datetime, timedelta
 
 def home(request):
     return render(request, 'usuarios/home.html')
 
 def dashboard_usuario(request):
-    if not request.session.get('usuario_id') or request.session.get('tipo_usuario') not in ['estudiante', 'autoridad']:
+    usuario_id = request.session.get('usuario_id')
+    if not usuario_id:
         return redirect('login')
 
-    return render(request, 'usuarios/dashboard_usuario.html')
+    # Obtener las solicitudes aceptadas desde la base de datos
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT s.nombre_evento, s.fecha, e.color
+            FROM solicitud s
+            JOIN espacio e ON s.espacio_id = e.id
+            WHERE s.estado = 'aceptada' AND s.usuario_id = %s
+        """, [usuario_id])
+        solicitudes_aceptadas = cursor.fetchall()
+
+    # Formatear los eventos para el calendario
+    eventos = []
+    for solicitud in solicitudes_aceptadas:
+        eventos.append({
+            'nombre': solicitud[0],  # nombre_evento
+            'fecha': solicitud[1].strftime('%Y-%m-%d'),  # fecha sin hora
+            'color': solicitud[2],  # color del espacio
+        })
+
+    # Generar las semanas del mes actual
+    hoy = datetime.now()
+    primer_dia_mes = hoy.replace(day=1)
+    ultimo_dia_mes = (primer_dia_mes + timedelta(days=32)).replace(day=1) - timedelta(days=1)
+
+    semanas = []
+    semana_actual = []
+    dia_actual = primer_dia_mes
+
+    # Rellenar días vacíos al inicio del mes
+    for _ in range(primer_dia_mes.weekday()):
+        semana_actual.append(0)
+
+    # Rellenar los días del mes
+    while dia_actual <= ultimo_dia_mes:
+        semana_actual.append(dia_actual.day)
+        if len(semana_actual) == 7:
+            semanas.append(semana_actual)
+            semana_actual = []
+        dia_actual += timedelta(days=1)
+
+    # Rellenar días vacíos al final del mes
+    if semana_actual:
+        semanas.append(semana_actual + [0] * (7 - len(semana_actual)))
+
+    # Obtener el año y el mes actual para usarlo en el template
+    año_actual = hoy.year
+    mes_actual = hoy.month
+
+    return render(request, 'usuarios/dashboard_usuario.html', {
+        'usuario': {'nombre': request.session.get('nombre')},
+        'eventos': eventos,
+        'semanas': semanas,
+        'año_actual': año_actual,
+        'mes_actual': mes_actual,
+    })
 
 def registrar_usuario(request):
     if request.method == 'POST':

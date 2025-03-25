@@ -222,3 +222,37 @@ table th {
 .buttons a:hover {
     background-color: #A18CB1; /* Color para botones al pasar el ratón */
 }
+
+.calendario {
+    width: 400px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.calendario table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.calendario th, .calendario td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+.calendario th {
+    background-color: #f4f4f4;
+}
+.calendario td {
+    position: relative;
+}
+.evento {
+    background-color: #e3f2fd;
+    border-radius: 3px;
+    padding: 2px 5px;
+    font-size: 12px;
+    margin: 2px 0;
+    display: block;
+}
+.evento.rojo { background-color: #ffebee; }
+.evento.verde { background-color: #e8f5e9; }
+.evento.azul { background-color: #e3f2fd; }
