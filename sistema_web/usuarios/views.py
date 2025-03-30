@@ -11,60 +11,96 @@ def dashboard_usuario(request):
     if not usuario_id:
         return redirect('login')
 
-    # Obtener las solicitudes aceptadas desde la base de datos
+    # Manejo seguro de parámetros de fecha
+    hoy = datetime.now()
+    
+    try:
+        mes_actual = int(request.GET.get('mes', hoy.month))
+        año_actual = int(request.GET.get('anio', hoy.year))
+    except (ValueError, TypeError):
+        mes_actual = hoy.month
+        año_actual = hoy.year
+
+    # Validación de rangos
+    mes_actual = max(1, min(12, mes_actual))  # Asegura mes entre 1-12
+    año_actual = max(2000, min(2100, año_actual))  # Ajusta según necesites
+
+    # Navegación entre meses
+    if mes_actual == 1:
+        mes_anterior, anio_anterior = 12, año_actual - 1
+        mes_siguiente, anio_siguiente = 2, año_actual
+    elif mes_actual == 12:
+        mes_anterior, anio_anterior = 11, año_actual
+        mes_siguiente, anio_siguiente = 1, año_actual + 1
+    else:
+        mes_anterior, anio_anterior = mes_actual - 1, año_actual
+        mes_siguiente, anio_siguiente = mes_actual + 1, año_actual
+
+    # Nombres de meses en español
+    nombres_meses = [
+        "", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    ]
+    nombre_mes = nombres_meses[mes_actual]  # Usamos el mes solicitado
+
+    # Consulta SQL simplificada (sin horas)
     with connection.cursor() as cursor:
         cursor.execute("""
-            SELECT s.nombre_evento, s.fecha, e.color
+            SELECT s.id, s.nombre_evento, s.fecha, e.color, e.nombre as espacio
             FROM solicitud s
             JOIN espacio e ON s.espacio_id = e.id
-            WHERE s.estado = 'aceptada' AND s.usuario_id = %s
-        """, [usuario_id])
-        solicitudes_aceptadas = cursor.fetchall()
+            WHERE s.estado = 'aceptada' 
+              AND s.usuario_id = %s
+              AND EXTRACT(MONTH FROM s.fecha) = %s
+              AND EXTRACT(YEAR FROM s.fecha) = %s
+            ORDER BY s.fecha
+        """, [usuario_id, mes_actual, año_actual])
+        eventos_db = cursor.fetchall()
 
-    # Formatear los eventos para el calendario
-    eventos = []
-    for solicitud in solicitudes_aceptadas:
-        eventos.append({
-            'nombre': solicitud[0],  # nombre_evento
-            'fecha': solicitud[1].strftime('%Y-%m-%d'),  # fecha sin hora
-            'color': solicitud[2],  # color del espacio
+    # Procesamiento de eventos
+    eventos_por_dia = {}
+    for evento in eventos_db:
+        dia = evento[2].day  # Extrae el día de la fecha
+        if dia not in eventos_por_dia:
+            eventos_por_dia[dia] = []
+        eventos_por_dia[dia].append({
+            'nombre': evento[1],
+            'color': evento[3],
+            'espacio': evento[4]
         })
 
-    # Generar las semanas del mes actual
-    hoy = datetime.now()
-    primer_dia_mes = hoy.replace(day=1)
-    ultimo_dia_mes = (primer_dia_mes + timedelta(days=32)).replace(day=1) - timedelta(days=1)
-
+    # Generación del calendario
     semanas = []
-    semana_actual = []
-    dia_actual = primer_dia_mes
-
-    # Rellenar días vacíos al inicio del mes
-    for _ in range(primer_dia_mes.weekday()):
-        semana_actual.append(0)
-
-    # Rellenar los días del mes
-    while dia_actual <= ultimo_dia_mes:
-        semana_actual.append(dia_actual.day)
-        if len(semana_actual) == 7:
-            semanas.append(semana_actual)
-            semana_actual = []
-        dia_actual += timedelta(days=1)
-
-    # Rellenar días vacíos al final del mes
-    if semana_actual:
-        semanas.append(semana_actual + [0] * (7 - len(semana_actual)))
-
-    # Obtener el año y el mes actual para usarlo en el template
-    año_actual = hoy.year
-    mes_actual = hoy.month
+    primer_dia_mes = datetime(año_actual, mes_actual, 1)
+    ultimo_dia_mes = (primer_dia_mes + timedelta(days=32)).replace(day=1) - timedelta(days=1)
+    
+    # Ajuste para semana comenzando en domingo
+    dia_actual = primer_dia_mes - timedelta(days=(primer_dia_mes.weekday() + 1) % 7)
+    
+    while dia_actual <= ultimo_dia_mes + timedelta(days=6):
+        semana = []
+        for _ in range(7):
+            if dia_actual.month == mes_actual:
+                semana.append({
+                    'dia': dia_actual.day,
+                    'eventos': eventos_por_dia.get(dia_actual.day, []),
+                    'es_hoy': dia_actual.date() == hoy.date()
+                })
+            else:
+                semana.append({'dia': 0, 'eventos': []})
+            dia_actual += timedelta(days=1)
+        semanas.append(semana)
 
     return render(request, 'usuarios/dashboard_usuario.html', {
         'usuario': {'nombre': request.session.get('nombre')},
-        'eventos': eventos,
         'semanas': semanas,
-        'año_actual': año_actual,
         'mes_actual': mes_actual,
+        'año_actual': año_actual,
+        'nombre_mes': nombre_mes,  # Usamos la variable calculada
+        'mes_anterior': mes_anterior,
+        'anio_anterior': anio_anterior,
+        'mes_siguiente': mes_siguiente,
+        'anio_siguiente': anio_siguiente
     })
 
 def registrar_usuario(request):

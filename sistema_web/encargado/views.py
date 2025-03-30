@@ -83,7 +83,7 @@ def aprobar_solicitud(request, solicitud_id):
                 send_mail(
                     'Solicitud Aprobada',
                     f'Tu solicitud para el evento "{nombre_evento}" ha sido aprobada.',
-                    'tu_correo@gmail.com',  # Remitente
+                    'cibanezsanguino@gmail.com',  # Remitente
                     [correo_usuario],  # Destinatario
                     fail_silently=False,
                 )
@@ -139,7 +139,7 @@ def rechazar_solicitud(request, solicitud_id):
                     send_mail(
                         'Solicitud Rechazada',
                         f'Tu solicitud para el evento "{nombre_evento}" ha sido rechazada. Motivo: {motivo_rechazo}',
-                        'tu_correo@gmail.com',  # Remitente
+                        'cibanezsanguino@gmail.com',  # Remitente
                         [correo_usuario],  # Destinatario
                         fail_silently=False,
                     )
