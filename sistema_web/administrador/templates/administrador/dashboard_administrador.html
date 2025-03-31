@@ -12,11 +12,11 @@
         <h1><i class="fas fa-user-shield"></i> Dashboard Administrador</h1>
         <p>Bienvenido, {{ request.session.nombre }}.</p>
         <div class="dashboard-actions">
-            <a href="{% url 'registrar_espacio' %}"><i class="fas fa-plus"></i> Registrar Espacio</a>
-            <a href="{% url 'registrar_encargado' %}"><i class="fas fa-user-plus"></i> Registrar Encargado</a>
-            <a href="{% url 'listar_espacios' %}"><i class="fas fa-list"></i> Listar Espacios</a>
-            <a href="{% url 'listar_encargados' %}"><i class="fas fa-list"></i> Listar Encargados</a>
-            <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+            <a href="{% url 'registrar_espacio' %}" class="dashboard-btn"><i class="fas fa-plus"></i> Registrar Espacio</a>
+            <a href="{% url 'registrar_encargado' %}" class="dashboard-btn"><i class="fas fa-user-plus"></i> Registrar Encargado</a>
+            <a href="{% url 'listar_espacios' %}" class="dashboard-btn"><i class="fas fa-list"></i> Listar Espacios</a>
+            <a href="{% url 'listar_encargados' %}" class="dashboard-btn"><i class="fas fa-list"></i> Listar Encargados</a>
+            <a href="{% url 'logout' %}" class="dashboard-btn"><i class="fas fa-sign-out-alt"></i>Cerrar Sesión</a>
         </div>
     </div>
 </body>

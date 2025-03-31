@@ -427,4 +427,18 @@ table th {
             font-weight: bold;
             color: #333; /* Color oscuro para mejor contraste */
         }
+/* ===== Estilos específicos para botones del dashboard ===== */
+.dashboard-actions a.dashboard-btn {
+    background-color: #7F6C99 !important; /* Fondo morado */
+    color: #FFFFFF !important; /* Texto blanco */
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 5px;
+    display: inline-block;
+}
+
+.dashboard-actions a.dashboard-btn:hover {
+    background-color: #A18CB1 !important; /* Fondo morado claro al hover */
+    color: #FFFFFF !important;
+}
 

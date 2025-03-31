@@ -12,10 +12,18 @@
         <h1><i class="fas fa-user-tie"></i> Dashboard Encargado</h1>
         <p>Bienvenido, {{ request.session.nombre }}.</p>
         <div class="dashboard-actions">
-            <a href="{% url 'solicitudes_pendientes' %}"><i class="fas fa-list"></i> Solicitudes Pendientes</a>
-            <a href="{% url 'solicitudes_aceptadas' %}"><i class="fas fa-check-circle"></i> Solicitudes Aceptadas</a>
-            <a href="{% url 'generar_reportes' %}"><i class="fas fa-file-alt"></i> Generar Reportes</a>
-            <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+            <a href="{% url 'solicitudes_pendientes' %}" class="dashboard-btn"> <!-- Clase añadida -->
+                <i class="fas fa-list"></i> Solicitudes Pendientes
+            </a>
+            <a href="{% url 'solicitudes_aceptadas' %}" class="dashboard-btn"> <!-- Clase añadida -->
+                <i class="fas fa-check-circle"></i> Solicitudes Aceptadas
+            </a>
+            <a href="{% url 'generar_reportes' %}" class="dashboard-btn"> <!-- Clase añadida -->
+                <i class="fas fa-file-alt"></i> Generar Reportes
+            </a>
+            <a href="{% url 'logout' %}" class="dashboard-btn"> <!-- Clase añadida -->
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </a>
         </div>
     </div>
 </body>
