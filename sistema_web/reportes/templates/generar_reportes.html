@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Generación de Reportes</title>
+    <!-- Tu hoja de estilos global -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <!-- Contenedor principal con la clase que uses en el resto del sitio,
+         por ejemplo 'form-container' o 'dashboard-container'. -->
+    <div class="form-container">
+        <!-- Enlace para volver al dashboard -->
+        <a href="{% url 'dashboard_encargado' %}" class="back-link">
+            <i class="fas fa-arrow-left"></i> Volver al Dashboard
+        </a>
+        
+        <h2>
+            <i class="fas fa-file-alt"></i> Generación de Reportes
+        </h2>
+        
+        <!-- Formulario de generación de reportes -->
+        <form action="{% url 'generar_reporte' %}" method="get">
+            <div class="form-group">
+                <label for="formato">Formato del Reporte:</label>
+                <select name="formato" id="formato" class="form-control">
+                    <option value="pdf">PDF</option>
+                    <option value="excel">Excel</option>
+                    <option value="word">Word</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="estado">Estado de las Solicitudes:</label>
+                <select name="estado" id="estado" class="form-control">
+                    <option value="todos">Todos los estados</option>
+                    <option value="aceptada">Aceptadas</option>
+                    <option value="rechazada">Rechazadas</option>
+                    <option value="pendiente">Pendientes</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="fecha_inicio">Fecha Inicial:</label>
+                <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <label for="fecha_fin">Fecha Final:</label>
+                <input type="date" name="fecha_fin" id="fecha_fin" class="form-control">
+            </div>
+            
+            <!-- Botón para generar el reporte -->
+            <div class="buttons">
+                <button type="submit" class="btn">
+                    <i class="fas fa-file-download"></i> Generar Reporte
+                </button>
+            </div>
+        </form>
+        
+        <!-- Botones de reportes rápidos -->
+        <div class="buttons">
+            <a href="{% url 'generar_reporte' %}?formato=pdf" class="btn btn-delete">
+                <i class="fas fa-file-pdf"></i> Reporte PDF Rápido
+            </a>
+            <a href="{% url 'generar_reporte' %}?formato=excel" class="btn btn-edit">
+                <i class="fas fa-file-excel"></i> Reporte Excel Rápido
+            </a>
+            <a href="{% url 'generar_reporte' %}?formato=word" class="btn btn-action">
+                <i class="fas fa-file-word"></i> Reporte Word Rápido
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

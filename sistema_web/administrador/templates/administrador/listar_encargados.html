@@ -27,8 +27,9 @@
                     <td>{{ encargado.nombre }}</td>
                     <td>{{ encargado.correo }}</td>
                     <td>
-                        <a href="{% url 'editar_encargado' encargado.id %}" class="btn btn-edit">Editar</a>
-                        <a href="{% url 'eliminar_encargado' encargado.id %}" class="btn btn-delete">Eliminar</a>
+                        <a href="{% url 'editar_encargado' encargado.id %}" class="btn btn-edit"><i class="fas fa-edit"></i> Editar</a>
+                        <a href="{% url 'eliminar_encargado' encargado.id %}" class="btn btn-delete"><i class="fas fa-trash"></i> Eliminar</a>
+
                     </td>
                 </tr>
                 {% endfor %}

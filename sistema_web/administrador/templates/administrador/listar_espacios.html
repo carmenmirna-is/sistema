@@ -26,8 +26,13 @@
                     <td>{{ espacio.2 }}</td>
                     <td>{{ espacio.3 }}</td>
                     <td>
-                        <a href="{% url 'editar_espacio' espacio.0 %}" class="btn"><i class="fas fa-edit"></i> Editar</a>
-                        <a href="{% url 'eliminar_espacio' espacio.0 %}" class="btn"><i class="fas fa-trash"></i> Eliminar</a>
+                        <!-- Agrega las clases btn-edit y btn-delete -->
+                        <a href="{% url 'editar_espacio' espacio.0 %}" class="btn btn-edit">
+                            <i class="fas fa-edit"></i> Editar
+                        </a>
+                        <a href="{% url 'eliminar_espacio' espacio.0 %}" class="btn btn-delete">
+                            <i class="fas fa-trash"></i> Eliminar
+                        </a>
                     </td>
                 </tr>
                 {% endfor %}
