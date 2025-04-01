@@ -9,6 +9,9 @@
 </head>
 <body>
     <div class="table-container">
+        <a href="{% url 'dashboard_administrador' %}" class="back-link">
+            <i class="fas fa-arrow-left"></i> Volver al Dashboard
+        </a>
         <h1><i class="fas fa-users"></i> Lista de Encargados</h1>
         <a href="{% url 'registrar_encargado' %}" class="btn">Registrar Nuevo Encargado</a>
         <table>

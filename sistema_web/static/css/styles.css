@@ -441,4 +441,36 @@ table th {
     background-color: #A18CB1 !important; /* Fondo morado claro al hover */
     color: #FFFFFF !important;
 }
+/* Estilos para la consulta PostgreSQL */
+.pautas-box {
+    background-color: #f8f9fa;
+    border-left: 4px solid #7F6C99;
+    padding: 15px;
+    margin-bottom: 25px;
+}
+
+.pautas-box ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.pautas-box li {
+    margin-bottom: 8px;
+    padding-left: 25px;
+    position: relative;
+}
+
+.pautas-box li:before {
+    content: "→";
+    color: #A18CB1;
+    position: absolute;
+    left: 0;
+}
+
+.tabla-espacios td:nth-child(4) {  /* Columna equipamiento */
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+
 

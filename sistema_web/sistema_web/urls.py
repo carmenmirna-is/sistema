@@ -50,4 +50,5 @@ urlpatterns = [
     path('listar-encargados/', administrador_views.listar_encargados, name='listar_encargados'),
     path('editar-encargado/<int:encargado_id>/', administrador_views.editar_encargado, name='editar_encargado'),
     path('eliminar-encargado/<int:encargado_id>/', administrador_views.eliminar_encargado, name='eliminar_encargado'),
+    path('espacios-disponibles/', usuarios_views.espacios_disponibles, name='espacios_disponibles'),
 ]

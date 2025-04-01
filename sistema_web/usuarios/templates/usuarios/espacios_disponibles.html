@@ -9,17 +9,25 @@
 </head>
 <body>
     <div class="table-container">
-        <a href="{% url 'dashboard_administrador' %}" class="back-link">
+        <a href="{% url 'dashboard_usuario' %}" class="back-link">
             <i class="fas fa-arrow-left"></i> Volver al Dashboard
         </a>
         <h1><i class="fas fa-list"></i> Lista de Espacios</h1>
+        <!-- Sección de pautas -->
+        <div class="pautas-box">
+            <h3><i class="fas fa-exclamation-circle"></i> Requisitos para reserva:</h3>
+            <ul>
+                <li><strong>Anticipación:</strong> Mínimo 3 días hábiles</li>
+                <li><strong>Documentación:</strong> Justificación en PDF (máx. 2MB)</li>
+                <li><strong>Horario:</strong> </li>
+            </ul>
+        </div>
         <table>
             <thead>
                 <tr>
                     <th>Nombre</th>
                     <th>Descripción</th>
                     <th>Encargado</th>
-                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,15 +36,6 @@
                     <td>{{ espacio.1 }}</td>
                     <td>{{ espacio.2 }}</td>
                     <td>{{ espacio.3 }}</td>
-                    <td>
-                        <!-- Agrega las clases btn-edit y btn-delete -->
-                        <a href="{% url 'editar_espacio' espacio.0 %}" class="btn btn-edit">
-                            <i class="fas fa-edit"></i> Editar
-                        </a>
-                        <a href="{% url 'eliminar_espacio' espacio.0 %}" class="btn btn-delete">
-                            <i class="fas fa-trash"></i> Eliminar
-                        </a>
-                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

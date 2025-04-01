@@ -228,4 +228,17 @@ def enviar_solicitud(request):
         return HttpResponse(f"Error: {e}", status=500)
 
     return render(request, 'usuarios/enviar_solicitud.html', {'espacios': espacios})
+
+def espacios_disponibles(request):
+    try:
+        with connection.cursor() as cur:
+            cur.execute(
+                "SELECT e.id, e.nombre, e.descripcion, c.nombre AS encargado_nombre "
+                "FROM espacio e "
+                "JOIN encargado c ON e.encargado_id = c.id"
+            )
+            espacios = cur.fetchall()
+    except Exception as e:
+        return HttpResponse(f"Error: {e}", status=500)
+    return render(request, 'usuarios/espacios_disponibles.html', {'espacios': espacios})
 # Create your views here.
